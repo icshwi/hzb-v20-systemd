@@ -11,3 +11,6 @@ Type=simple
 # Run procServ 
 WorkingDirectory=/epics/iocs/cmds/hzb-v20-evg-01-cmd
 ExecStart=/epics/iocs/cmds/hzb-v20-evg-01-cmd/start_systemd.sh
+
+[Install]
+WantedBy=multi-user.target
