@@ -1,0 +1,25 @@
+[Unit]
+Description=IOC: %i
+#AssertPathExists=/epics/iocs/cmds/%i-cmd/st.%i.cmd
+#AssertPathExists=/epics/iocs/cmds/e3-common/e3-env
+#AssertPathExists=/epics/iocs/cmds/%i-cmd/%i-env
+#ConditionHost=ics-hzb-ioc-01
+
+[Service]
+User=ioc
+
+# Execute StartPre with root permissions
+PermissionsStartOnly=true
+EnvironmentFile=/epics/iocs/cmds/e3-common/e3-env
+EnvironmentFile=/epics/iocs/cmds/%i-cmd/%i-env
+
+# Run procServ with user ioc
+ExecStart=/usr/bin/procServ \
+		-f \
+		-L ${VAR_DIR}/log/procServ/out-%i \
+		-i ^C^D \
+		-c ${VAR_DIR}/run/procServ/%i \
+		-n %i \
+		${PROCSERV_PORT} \
+		${E3_REQUIRE_LOCATION}/bin/iocsh.bash \
+		${IOC_CMD_DIR}/%i-cmd/st.%i.cmd

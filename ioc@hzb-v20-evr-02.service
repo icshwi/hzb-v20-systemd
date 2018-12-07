@@ -1,0 +1,13 @@
+[Unit]
+Description=IOC: %i
+ConditionHost=ics-hzb-v20-ioc-02
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+User=root
+Type=simple
+
+# Run procServ 
+WorkingDirectory=/epics/iocs/cmds/hzb-v20-evr-02-cmd
+ExecStart=/epics/iocs/cmds/hzb-v20-evr-02-cmd/start_systemd.sh
